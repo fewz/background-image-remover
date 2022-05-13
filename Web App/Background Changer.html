@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+	integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<h1>Green-Screen Background Changer</h1>
+<canvas id="can1" style="border: 1px solid black;"></canvas>
+<canvas id="can2" style="border: 1px solid black;"></canvas>
+<p>Foreground Image: <input type="file" id="finput" accept="image/*"></p>
+<input type="color" id="selectedColor" name="favcolor" value="#ff0000">
+<p>Note: Background image should be greater or equal to the pixel size of ForeGround Image</p>
+<p>If the background of Foreground Image is Green Click here -> <input type="button" value="Change Background"
+		onclick="bgchangegr()"></p>
+<input type="button" value="Remove Background" onclick="removebg()"></p>
+<input type="button" value="Clear Canvases" onclick="clearCanvas()">
+
+<button onclick="save()">
+	Save
+</button>
+
+<button onclick="swap()">
+	Swap
+</button>
+<img id="res" />
+<style>
+	html {
+		background-color: rgba(230, 230, 170);
+	}
+</style>
+<script src="background.js"></script>
+<script src="SimpleImage.js"></script>
+
+</html>
