@@ -1,32 +1,135 @@
 <!DOCTYPE HTML>
 <html>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-	integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<h1>Green-Screen Background Changer</h1>
-<canvas id="can1" style="border: 1px solid black;"></canvas>
-<canvas id="can2" style="border: 1px solid black;"></canvas>
-<p>Foreground Image: <input type="file" id="finput" accept="image/*"></p>
-<input type="color" id="selectedColor" name="favcolor" value="#ff0000">
-<p>Note: Background image should be greater or equal to the pixel size of ForeGround Image</p>
-<p>If the background of Foreground Image is Green Click here -> <input type="button" value="Change Background"
-		onclick="bgchangegr()"></p>
-<input type="button" value="Remove Background" onclick="removebg()"></p>
-<input type="button" value="Clear Canvases" onclick="clearCanvas()">
 
-<button onclick="save()">
-	Save
-</button>
+<head>
+	<script src="https://code.jquery.com/jquery-3.7.0.min.js"
+		integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+		integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+		crossorigin="anonymous"></script>
+	<style>
+		body {
+			background-color: black;
+			color: white;
+			padding: 25px;
+		}
 
-<button onclick="swap()">
-	Swap
-</button>
-<img id="res" />
-<style>
-	html {
-		background-color: rgba(230, 230, 170);
-	}
-</style>
+		.container-btn input,
+		.container-btn button {
+			margin-left: 10px;
+			margin-right: 10px;
+		}
+
+		ul li:not(.unclick) {
+			color: lightblue;
+			cursor: pointer;
+		}
+
+		ul li:not(.unclick):hover {
+			color: lightgreen;
+		}
+
+		h1 {
+			color: aquamarine;
+		}
+
+		h4 {
+			color: greenyellow;
+		}
+
+		#more {
+			display: none;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>Background Changer</h1>
+	<div style="display:flex; margin: 25px 0px;">
+		<div style="width:100%;">
+			<h4>Input</h4>
+			<canvas id="can1" style="border: 1px solid white;"></canvas>
+			<div class="mt-3">
+				<h5>Source Image:</h5>
+				<input type="file" id="finput" accept="image/*">
+			</div>
+		</div>
+		<div style="width: 100%;">
+			<h4>Output</h4>
+			<canvas id="can2" style="border: 1px solid white;"></canvas>
+			<div class="mt-3">
+				<h5>Color Target:</h5>
+				<input type="color" id="selectedColor" name="favcolor" value="#ff0000">
+			</div>
+		</div>
+	</div>
+
+	<h1>Action</h1>
+	<div class="container-btn" style="display: flex;">
+		<button class="btn btn-primary" onclick="removebg()">
+			Remove Background
+		</button>
+		<button class="btn btn-secondary" onclick="swap()">
+			Swap
+		</button>
+		<button class="btn btn-primary" onclick="bgchangegr()">
+			Change Background
+		</button>
+		<button class="btn btn-secondary" onclick="save()">
+			Save
+		</button>
+		<button class="btn btn-danger" type="button" onclick="clearCanvas()">
+			Clear Canvases
+		</button>
+	</div>
+	<div style="width:400px;">
+		<h1>How To Use</h1>
+		<ul>
+			<li id="OpenImgUpload">Upload Source Image</li>
+			<li onclick="removebg()">Remove Background</li>
+			<li class="unclick">Output should be show on right</li>
+		</ul>
+		<h1>Change Background to another color</h1>
+		<ul>
+			<li class="unclick">Background must be transparent first, to make it transparent follow instruction on top
+			</li>
+			<li onclick="swap()">Swap transparent image and make sure transparent image on the left</li>
+			<li id="OpenColor">Pick color that want to fill</li>
+			<li onclick="bgchangegr()">Change Background</li>
+		</ul>
+	</div>
+	<p>
+		<button class="btn btn-secondary mt-3" type="button" data-toggle="collapse" data-target="#collapseExample"
+			aria-expanded="false" aria-controls="collapseExample" onclick="scrollToBottom()">
+			How To Configure Server
+		</button>
+	</p>
+	<div class="collapse" id="collapseExample">
+		<div class="card card-body" style="background-color: gray; color:white;">
+			<h5>Setup Local (Run Server on server folder)</h5>
+			<ul id="ul">
+				<li class="unclick">Open Server Folder</li>
+				<li class="unclick">Opend cmd</li>
+				<li class="unclick">`py Server.py`</li>
+			</ul>
+		</div>
+	</div>
+	<img id="res" />
+</body>
+
 <script src="background.js"></script>
 <script src="SimpleImage.js"></script>
+<script>
+	$('#OpenImgUpload').click(function () { $('#finput').trigger('click'); });
+	$('#OpenColor').click(function () { $('#selectedColor').trigger('click'); });
+
+	function scrollToBottom() {
+		setTimeout(() => {
+			window.scrollTo({ top: document.body.scrollHeight, left: 0, behavior: "smooth" });
+		}, 200);
+	}
+</script>
 
 </html>

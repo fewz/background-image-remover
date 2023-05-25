@@ -4,11 +4,27 @@ var image2 = null;
 
 document.getElementById("finput").addEventListener('change', handleImage, false);
 
-function save() {
+async function save() {
 	const canvasResult = document.getElementById("can2");
 	var dataURL = canvasResult.toDataURL("image/png");
-	var newTab = window.open('about:blank', 'image from canvas');
-	newTab.document.write("<img src='" + dataURL + "' alt='from canvas'/>");
+	// var newTab = window.open('about:blank', 'image from canvas');
+	// newTab.document.write("<img src='" + dataURL + "' alt='from canvas'/>");
+
+	const response = await fetch(dataURL);
+
+	const blobImage = await response.blob();
+
+	const href = URL.createObjectURL(blobImage);
+
+	const anchorElement = document.createElement('a');
+	anchorElement.href = href;
+	anchorElement.download = 'output';
+
+	document.body.appendChild(anchorElement);
+	anchorElement.click();
+
+	document.body.removeChild(anchorElement);
+	window.URL.revokeObjectURL(href);
 }
 
 function resizeImage(width, height) {
